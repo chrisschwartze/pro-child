@@ -1,0 +1,18 @@
+/* Allows for swapping rows (Set rows both in the same direction and add .swap class) */
+@media (min-width: 768px) {
+  .x-section .x-container.swap {
+    display: flex;
+    -webkit-box-orient: horizontal;
+    flex-direction: row-reverse;
+  }
+}
+
+/* Remove iOS shadow on input fields */
+input[type] {
+  background-clip: padding-box;
+}
+
+/* Hide extra scroll bar */
+body {
+  overflow: hidden;
+}

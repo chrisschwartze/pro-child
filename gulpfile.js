@@ -6,7 +6,7 @@
 /* SETTINGS
 /===================================================== */
 // local domain used by browsersync
-var browsersync_proxy = "my-site.local";
+var browsersync_proxy = "dev.xx.com";
 
 // default asset paths
 var assets = {
@@ -45,9 +45,10 @@ var plumber = require('gulp-plumber');
 var watch = require('gulp-watch');
 // delete
 var del = require('del');
-// Add a delay
-var wait = require('gulp-wait')
-
+// sourcemap support
+var sourcemaps = require('gulp-sourcemaps');
+// group media Queries
+var gcmq = require('gulp-group-css-media-queries');
 
 /* TASKS
 /===================================================== */
@@ -68,10 +69,10 @@ gulp.task('browsersync', function() {
   browserSync.init({
     proxy: browsersync_proxy,
     notify: false,
-    open: false,
+    open: true,
     snippetOptions: {
       whitelist: ['/wp-admin/admin-ajax.php'],
-      blacklist: ['/wp-admin/**']
+  //  blacklist: ['/wp-admin/**']
     }
   });
 });
@@ -81,15 +82,16 @@ gulp.task('browsersync', function() {
 /------------------------*/
 // from:    assets/styles/bundle.scss
 // actions: compile, minify, prefix, rename
-// to:      dist/main.min.css
+// to:      dist/app.min.css
 gulp.task('css', ['clean:css'], function() {
   return gulp.src(assets['css'].concat(vendors['css']))
     .pipe(plumber({errorHandler: notify.onError("<%= error.message %>")}))
-    .pipe(concat('main.min.css'))
+    .pipe(concat('app.min.css'))
     .pipe(sass())
     .pipe(autoprefixer('last 2 version', { cascade: false }))
+    .pipe(gcmq())
     .pipe(cleanCSS())
-    .pipe(rename('dist/main.min.css'))
+    .pipe(rename('dist/app.min.css'))
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream());
 });
@@ -97,11 +99,11 @@ gulp.task('css', ['clean:css'], function() {
 
 /* CSS CACHE BUSTING
 /------------------------*/
-// from:    dist/main.min.css
+// from:    dist/app.min.css
 // actions: create busted version of file
 // to:      dist/style-[hash].min.css
 gulp.task('cachebust', ['clean:cachebust', 'css'], function() {
-  return gulp.src('dist/main.min.css')
+  return gulp.src('dist/app.min.css')
     .pipe(rev())
     .pipe(gulp.dest('dist'))
     .pipe(rev.manifest({merge: true}))
@@ -116,13 +118,15 @@ gulp.task('cachebust', ['clean:cachebust', 'css'], function() {
 // to:      dist/script.min.css
 gulp.task('javascript', ['clean:javascript'], function() {
   return gulp.src(assets['javascript'].concat(vendors['javascript']))
+  //  .pipe(sourcemaps.init())
     .pipe(order([
       'assets/scripts/*.js'
     ], { base: './' }))
     .pipe(plumber({errorHandler: notify.onError("<%= error.message %>")}))
-    .pipe(concat('main.min.js'))
-    .pipe(uglify())
-    .pipe(rename('dist/main.min.js'))
+      .pipe(concat('app.min.js'))
+      .pipe(uglify())
+      .pipe(rename('dist/app.min.js'))
+  //  .pipe(sourcemaps.write())
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream());
 });
@@ -146,11 +150,14 @@ gulp.task('images', ['clean:images'],  function() {
 // watch for modifications in
 // styles, scripts, images, php files, html files
 gulp.task('watch',  ['browsersync'], function() {
+  gulp.watch('*.html', browserSync.reload);
+  gulp.watch('framework/**/**/*.php', browserSync.reload);
+  gulp.watch('inc/**/*.php', browserSync.reload);
+  gulp.watch('woocommerce/**/*.php', browserSync.reload);
+  gulp.watch('*.php', browserSync.reload);
   gulp.watch(assets['css_watch'], ['css', 'cachebust']);
   gulp.watch(assets['javascript'], ['javascript']);
   gulp.watch(assets['images'], ['images']);
-  gulp.watch('*.php', browserSync.reload);
-  gulp.watch('*.html', browserSync.reload);
 });
 
 

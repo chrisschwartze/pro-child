@@ -1,0 +1,20 @@
+/**
+ * X Button
+ */
+.button,
+.x-btn,
+.x-btn.button,
+a.x-btn,
+a.x-btn.button,
+input[type='submit'],
+[type='submit'] {
+  // A fix to remove the ugly text-shadow
+  text-shadow: none!important;
+
+  &:active,
+  &:focus,
+  &:hover {
+    // A fix to remove the ugly text-shadow
+    text-shadow: none;
+  }
+}

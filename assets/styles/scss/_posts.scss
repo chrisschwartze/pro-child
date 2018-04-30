@@ -1,0 +1,140 @@
+/**
+ * Posts
+ */
+
+/* Featured image */
+.entry-featured
+{
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    img
+    {
+        // border-radius: 6px;
+        // background: #fff;
+    }
+}
+
+.entry-thumb
+{
+    min-height: 50px;
+
+    // background: #fff;
+    &:before
+    {
+        display: none;
+
+        content: '';
+
+        background-color: none;
+    }
+
+    &:hover img
+    {
+        transition: opacity .15s ease;
+
+        opacity: 9;
+    }
+}
+/**
+ * Single post
+ */
+.single-post
+{
+    /* Single Post title */
+    h1.entry-title
+    {
+        &:before
+        {
+            // Fix to remove the icon before the headline
+            display: none;
+        }
+    }
+
+    .content
+    {
+        /* Link styling */
+        li,
+        p
+        {
+            // font-size: 20px;
+            // color: #333;
+            a
+            {
+                // color: blue;
+            }
+        }
+    }
+}
+@media (max-width: 991px)
+{
+    .single-post .content
+    {
+        li,
+        p
+        {
+            // font-size: 19px;
+        }
+    }
+}
+@media (max-width: 767px)
+{
+    .single-post .content
+    {
+        li,
+        p
+        {
+            // font-size: 18px;
+        }
+    }
+}
+
+/**
+ * Post Archive, Post Image & Author bio
+ */
+
+.archive .entry-wrap,
+.blog .entry-wrap
+{
+    padding: 30px;
+    background: #fff;
+
+    /* Space betweeen posts */
+    .hentry:not(:first-of-type)
+    {
+        margin-top: 40px!important;
+    }
+    /* Archive title */
+    h2.entry-title
+    {
+        &:before
+        {
+            // Fix to remove the icon before the headline
+            display: none;
+        }
+    }
+
+    a.entry-thumb:hover img
+    {
+        opacity: .8;
+    }
+}
+
+
+
+.wp-caption
+{
+    border: none!important;
+}
+
+.gallery-item > .wp-caption-text,
+.gallery-item > .wp-caption-text:last-child,
+.wp-caption > .wp-caption-text,
+.wp-caption > .wp-caption-text:last-child
+{
+    font-size: 13px;
+
+    text-transform: none;
+}

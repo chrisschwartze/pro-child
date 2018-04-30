@@ -1,0 +1,105 @@
+/**
+ * Blockquote
+ */
+blockquote {
+  line-height: 1.5;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 10px 20px;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 5px solid lighten($secondary-color, 10%);
+
+  p {
+    font-size: 21px!important;
+    margin-bottom: 10px;
+  }
+
+  cite {
+    font-weight: bold;
+    position: relative;
+    top: 10px;
+  }
+}
+@media (max-width: 767px) {
+  blockquote {
+    margin-top: 35px;
+    margin-bottom: 35px;
+
+    p {
+      font-size: 18px!important;
+    }
+  }
+}
+/**
+ * Inputs, textareas etc.
+ */
+textarea {
+  border: 2px solid #f0ebf3!important;
+}
+
+input {
+  &[type='text'],
+  &[type='email'],
+  &[type='number'],
+  &[type='tel'],
+  &[type='url'],
+  &[type='password'],
+  &[type='text'] {
+    font-size: 14px;
+    height: 60px;
+    border: 2px solid #f0ebf3!important;
+    border-radius: 3px;
+
+    &:focus {
+      border-color: #333;
+      outline: 0;
+    }
+  }
+}
+@media (max-width: 991px) {
+  input {
+    &[type='text'],
+    &[type='email'],
+    &[type='number'],
+    &[type='tel'],
+    &[type='url'],
+    &[type='password'],
+    &[type='text'] {
+      height: 55px;
+    }
+  }
+}
+@media (max-width: 767px) {
+  input {
+    &[type='text'],
+    &[type='email'],
+    &[type='number'],
+    &[type='tel'],
+    &[type='url'],
+    &[type='password'],
+    &[type='text'] {
+      height: 50px;
+    }
+  }
+}
+/**
+ * Codeblock
+ */
+pre {
+  &.code,
+  &.x-code {
+    font-size: 17px;
+    padding: 15px;
+    color: lighten($body-color, 40%);
+    border: 2px solid lighten($black-alternate, 10%);
+    background: $black-alternate;
+
+    code {
+      line-height: 1.4em;
+      color: lighten($body-color, 32%);
+      background: transparent;
+    }
+  }
+}
